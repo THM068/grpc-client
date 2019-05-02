@@ -1,6 +1,9 @@
 package io.github.caio.grpc;
 
 
+import helloworld.grpc.HelloRequest;
+import helloworld.grpc.HelloResponse;
+import helloworld.grpc.HelloServiceGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -53,11 +56,11 @@ public class HelloWorldServer {
         }
     }
 
-    private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
+    private class GreeterImpl extends HelloServiceGrpc.HelloServiceImplBase {
 
-        @Override
+
         public void sayHello(HelloRequest request, StreamObserver<HelloResponse> responseObserver) {
-            HelloResponse response = HelloResponse.newBuilder().setMessage("Hello " + request.getName()).build();
+            HelloResponse response = HelloResponse.newBuilder().setGreeting("Hello " + request.getFirstName()).build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
